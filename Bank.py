@@ -1,5 +1,4 @@
 import random
-import time
 
 class Bank:
     """Bank class"""
@@ -15,16 +14,20 @@ class Bank:
         self.account_type = account_type
         account_num = random.randrange(0, 999999999)
         self.accounts[account_num] = [name, account_balance, account_type]
+        print(f"Account created with account number {account_num}")
         
     def create_account(self, name: str, initial_deposit: float, account_type: str):
         """add a new account"""
         account_num = random.randrange(0, 999999999)
         self.accounts[account_num] = [name, initial_deposit, account_type]
+        print(f"Account created with account number {account_num}")
         
     def authenticate(self, name: str, account_number: int):
         """Checks if account number and name exists"""
         found_name = self.accounts.get(account_number, None)
-        if found_name == name:
+        if found_name == None:
+            return False
+        elif found_name[0] == name:
             return True
         else:
             return False
@@ -48,11 +51,11 @@ while True:
     print("")
     print(f"Welcome to {myBank.bank_name}")
     print("")
-    option = input("Would you like to login(l) or register(r)? ")
+    option = input("Would you like to login(l) or register(r)? (Any other inputs will exit)")
     if option == "l":
         print("    Login screen:")
         user = input("Please enter the name/owner of the account: ")
-        acc_num = input("Please enter the account number: ")
+        acc_num = int(input("Please enter the account number: "))
         if myBank.authenticate(user, acc_num):
             while True:
                 print("")
@@ -76,7 +79,6 @@ while True:
                     print("Invalid option")
         else:
             print("Login failed...")
-            time.sleep(3)  # let him soak in his mistake
             continue
     elif option == "r":
         print("    Account Registration:")
